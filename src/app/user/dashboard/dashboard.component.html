@@ -1,0 +1,80 @@
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-1"><h4>Filter</h4></div>
+      <div class="col-md-5">
+        <input type="text" [formControl]="searchControl"/>
+      </div>
+
+      <div class="col-md-6">
+        <button class="btn btn-outline-primary btn-sm" routerLink="/user">Add User</button>
+      </div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-md-6">
+        <h6>Filtered by: </h6>
+      </div>
+    </div> -->
+
+    <div class="table-responsive">
+      <table class="table mb-0">
+        <thead>
+          <tr>
+            <th>S/N</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+
+        <ng-template #noDataTemplate>
+          <ng-container *ngIf="isLoading; else emptyDataTemplate">
+            <div>Loading...</div>
+          </ng-container>
+        </ng-template>
+
+      <ng-template #emptyDataTemplate>
+        <div>No data found</div>
+      </ng-template>
+
+        <tbody *ngIf="filteredUsers && filteredUsers.length > 0; else noDataTemplate">
+          <tr *ngFor="let user of paginatedUsers; let i = index">
+            <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+            <td>
+              <a [routerLink]="['/user', user.id]"> {{user.name}} </a>
+            </td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>
+              <button class="btn btn-outline-primary btn-sm"
+                      [routerLink]="['/user', user.id]">
+                Edit
+              </button>
+              <button class="btn btn-outline-danger btn-sm ms-3"
+              (click)="delete(user.id)"
+                      >
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Pagination Controls -->
+      <div *ngIf="totalPages > 1">
+        <button (click)="onPageChange(1)" [disabled]="currentPage === 1">First</button>
+        <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">Prev</button>
+        Page {{ currentPage }} of {{ totalPages }}
+        <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+        <button (click)="onPageChange(totalPages)" [disabled]="currentPage === totalPages">Last</button>
+      </div>
+    </div>
+
+  </div>
+</div>

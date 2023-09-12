@@ -1,0 +1,32 @@
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+
+  <div class="card-body">
+    <form [formGroup]="userForm" (ngSubmit)="saveUser()">
+      <div class="form-group d-flex mt-3">
+        <h5 for="name" class="me-3">Name:</h5>
+        <input id="name" type="text" class="form-control" formControlName="name" placeholder="Enter name">
+        <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched" class="text-danger">
+          Name is required.
+        </div>
+      </div>
+
+      <div class="form-group d-flex mt-3">
+        <h5 for="email" class="me-3">Email:</h5>
+        <input id="email" type="email" class="form-control" formControlName="email" placeholder="Enter email">
+        <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="text-danger">
+          Valid email is required.
+        </div>
+      </div>
+
+      <div class="form-group d-flex mt-3">
+        <h5 for="role" class="me-3">Role:</h5>
+        <input id="role" type="text" class="form-control" formControlName="role" placeholder="Enter role">
+      </div>
+
+
+      <button class="btn btn-outline-primary mt-3" type="submit" [disabled]="userForm.invalid">{{buttonTitle}}</button>
+    </form>
+</div>
