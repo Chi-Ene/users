@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/shared/interfaces/users';
 import { UserService } from 'src/app/shared/services/user.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -16,6 +18,9 @@ export class UserEditComponent {
   user: any = {};  // The user object for both adding and editing
   id: number | null = null;
   buttonTitle!: string;
+  isLoading = true;
+  hasError = false;
+  errorMessage = '';
 
   // userForm = new FormGroup({
   //   name: new FormControl('Phoebe', {nonNullable: true}),
@@ -32,7 +37,8 @@ export class UserEditComponent {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    private router: Router) {}
+    private router: Router,
+    private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'] ? parseInt(this.route.snapshot.params['id']) : null;
@@ -65,18 +71,32 @@ export class UserEditComponent {
 
     if (this.id) {
       this.buttonTitle = 'Edit User';
-      this.userService.updateUser(this.id, formData as User).subscribe(() => {
-        console.log('User updated successfully!');
-        this.router.navigate(['/users']);  // Redirect back to user list after update
-      });
+      this.userService.updateUser(this.id, formData as User).subscribe({
+              next: data => { Swal.fire('User updated successfully!');
+               this.router.navigate(['/users']);  // Redirect back to user list after update
+            },
+              error: err => {
+                this.isLoading = false;
+                this.hasError = true;
+                this.errorMessage = err.message || 'An error occurred while fetching data.';
+                Swal.fire(this.errorMessage, 'Error'); // Display the toast
+              }
+       });
     } else {
-      this.userService.addUser(formData as User).subscribe(() => {
-        console.log('User added successfully!');
-        this.router.navigate(['/users']);  // Redirect back to user list after adding
-      });
+      this.userService.addUser(formData as User).subscribe({
+              next: data => { Swal.fire('User added successfully!');
+               this.router.navigate(['/users']);  // Redirect back to user list after adding
+            },
+              error: err => {
+                this.isLoading = false;
+                this.hasError = true;
+                this.errorMessage = err.message || 'An error occurred while fetching data.';
+                Swal.fire(this.errorMessage, 'Error'); // Display the toast
+              }
+       });
     }
   } else {
-    console.warn('Form is not valid');
+    Swal.fire('Form is not valid');
   }
 }
 

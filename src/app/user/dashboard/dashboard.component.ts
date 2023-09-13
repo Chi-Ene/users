@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { debounceTime, distinctUntilChanged, of, startWith, switchMap } from 'rxjs';
 import { User } from 'src/app/shared/interfaces/users';
 import { UserService } from 'src/app/shared/services/user.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -30,7 +33,8 @@ export class DashboardComponent {
 
   constructor(
     private userService: UserService,
-    private route: ActivatedRoute,) {}
+    private route: ActivatedRoute,
+    private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'] ? parseInt(this.route.snapshot.params['id']) : null;
@@ -75,6 +79,7 @@ loadUsers(): void {
         this.isLoading = false; // Turn off loading since an error occurred
         this.hasError = true;   // Set error flag
         this.errorMessage = err.message || 'An error occurred while fetching data.'; // Display the error message
+        Swal.fire(this.errorMessage, 'Error'); // Display the toast
     }
 });
 }
@@ -88,7 +93,7 @@ updatePaginatedUsers(): void {
   delete(id: number): void {
     this.userService.deleteUser(id).subscribe({
     next: () => {
-      // alert('User deleted successfully!');
+      Swal.fire('User deleted successfully!');
        if (this.currentPage > 1 && (this.currentPage - 1) * this.pageSize >= this.filteredUsers.length) {
         this.currentPage--;
       }
@@ -96,6 +101,7 @@ updatePaginatedUsers(): void {
       this.updatePaginatedUsers();
     },
     error: error => {
+      Swal.fire(this.errorMessage, 'Error'); // Display the toast
       console.error('Error deleting user:', error);
     }
   });

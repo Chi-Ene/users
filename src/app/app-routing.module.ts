@@ -5,12 +5,12 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
 
 const routes: Routes = [
-  { path: 'users', component: DashboardComponent },
-  { path: 'users/:id', component: UserDetailComponent },
-  { path: 'user/:id', component: UserEditComponent },
-  { path: 'user', component: UserEditComponent },
-  {path: '', pathMatch: 'full', redirectTo: 'users'}
+  { path: 'users', component: DashboardComponent, data: { animation: 'Dashboard' } },
+  { path: 'user/:id', component: UserEditComponent, data: { animation: 'UserEdit' } },
+  { path: 'user', component: UserEditComponent, data: { animation: 'UserEdit' } },
+  { path: '', pathMatch: 'full', redirectTo: 'users' }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

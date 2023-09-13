@@ -34,8 +34,8 @@
 
 
         <ng-template #noDataTemplate>
-          <ng-container *ngIf="isLoading; else emptyDataTemplate">
-            <div>Loading...</div>
+          <ng-container *ngIf="isLoading; else emptyDataTemplate"  align="center">
+            <div class="loader"></div>
           </ng-container>
         </ng-template>
 
@@ -50,15 +50,8 @@
             <td>{{ user.email }}</td>
             <td>{{ user.role }}</td>
             <td>
-              <button class="btn btn-outline-primary btn-sm"
-                      [routerLink]="['/user', user.id]">
-                Edit
-              </button>
-              <button class="btn btn-outline-danger btn-sm ms-3"
-              (click)="delete(user.id)"
-                      >
-                Delete
-              </button>
+              <button class="btn btn-outline-primary btn-sm" [routerLink]="['/user', user.id]">Edit</button>
+              <button class="btn btn-outline-danger btn-sm ms-3" (click)="delete(user.id)">Delete</button>
             </td>
           </tr>
         </tbody>

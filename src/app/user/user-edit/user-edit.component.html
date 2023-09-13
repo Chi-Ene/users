@@ -36,6 +36,9 @@
           </div>
         </div>
         <div align="center">
+           <button class="btn btn-outline-secondary mt-3 me-3" style="width:80px;" type="button" title="Cancel your edits" [routerLink]="['/users']">
+            Cancel
+          </button>
           <button class="btn btn-outline-primary mt-3" type="submit" [disabled]="!userForm.valid">{{buttonTitle}}</button>
         </div>
       </form>
