@@ -1,17 +1,17 @@
 <div class="card">
   <div class="card-header">
-    {{pageTitle}}
+    <h3>{{pageTitle}}</h3>
   </div>
 
   <div class="card-body">
     <div class="row">
-      <div class="col-md-1"><h4>Filter</h4></div>
+      <div class="col-md-1"><h4>Search By:</h4></div>
       <div class="col-md-5">
         <input type="text" [formControl]="searchControl"/>
       </div>
 
       <div class="col-md-6">
-        <button class="btn btn-outline-primary btn-sm" routerLink="/user">Add User</button>
+        <a type="submit" class="btn btn-outline-primary mb-3" role="button" routerLink="/user">Add User</a>
       </div>
     </div>
     <!-- <div class="row">
@@ -21,8 +21,8 @@
     </div> -->
 
     <div class="table-responsive">
-      <table class="table mb-0">
-        <thead>
+      <table class="table table-bordered table-hover ">
+        <thead class="table-primary">
           <tr>
             <th>S/N</th>
             <th>Name</th>
@@ -45,10 +45,8 @@
 
         <tbody *ngIf="filteredUsers && filteredUsers.length > 0; else noDataTemplate">
           <tr *ngFor="let user of paginatedUsers; let i = index">
-            <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
-            <td>
-              <a [routerLink]="['/user', user.id]"> {{user.name}} </a>
-            </td>
+            <th>{{ (currentPage - 1) * pageSize + i + 1 }}</th>
+            <td>{{user.name}}</td>
             <td>{{ user.email }}</td>
             <td>{{ user.role }}</td>
             <td>
@@ -65,15 +63,14 @@
           </tr>
         </tbody>
       </table>
-
       <!-- Pagination Controls -->
-      <div *ngIf="totalPages > 1">
-        <button (click)="onPageChange(1)" [disabled]="currentPage === 1">First</button>
-        <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">Prev</button>
-        Page {{ currentPage }} of {{ totalPages }}
-        <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
-        <button (click)="onPageChange(totalPages)" [disabled]="currentPage === totalPages">Last</button>
-      </div>
+        <div class="mt-2 paginate" *ngIf="totalPages > 1" align="center">
+          <!-- <button (click)="onPageChange(1)" [disabled]="currentPage === 1">First</button> -->
+          <button class="btn btn-outline-secondary" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">Prev</button>
+          Page {{ currentPage }} of {{ totalPages }}
+          <button class="btn btn-outline-primary" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+          <!-- <button (click)="onPageChange(totalPages)" [disabled]="currentPage === totalPages">Last</button> -->
+        </div>
     </div>
 
   </div>

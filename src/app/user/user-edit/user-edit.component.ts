@@ -26,7 +26,7 @@ export class UserEditComponent {
   userForm = new FormGroup({
     name: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
-    role: new FormControl(''),
+    role: new FormControl('', Validators.required),
   });
 
   constructor(
