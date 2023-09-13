@@ -22,12 +22,6 @@ export class UserEditComponent {
   hasError = false;
   errorMessage = '';
 
-  // userForm = new FormGroup({
-  //   name: new FormControl('Phoebe', {nonNullable: true}),
-  //   email: new FormControl('phoebebrown@gmail.com', {nonNullable: true}),
-  //   role: new FormControl('', {nonNullable: true}),
-  // });
-
   userForm = new FormGroup({
     name: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),

@@ -5,12 +5,13 @@
 
   <div class="card-body">
     <div class="row">
-      <div class="col-md-2"><strong>Search By:</strong></div>
-      <div class="col-md-4">
+      <div class="col-md-2 col-sm-2 col-lg-2"><strong>Search By:</strong></div>
+
+      <div class="col-md-4 col-sm-4 col-lg-4">
         <input type="text" [formControl]="searchControl"/>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-6 col-sm-6 col-lg-6">
         <a type="submit" class="btn btn-outline-primary mb-3" role="button" routerLink="/user">Add User</a>
       </div>
     </div>
@@ -50,8 +51,10 @@
             <td>{{ user.email }}</td>
             <td>{{ user.role }}</td>
             <td>
-              <button class="btn btn-outline-primary btn-sm" [routerLink]="['/user', user.id]">Edit</button>
-              <button class="btn btn-outline-danger btn-sm ms-3" (click)="delete(user.id)">Delete</button>
+              <div class="d-flex">
+                <button class="btn btn-outline-primary btn-sm" [routerLink]="['/user', user.id]">Edit</button>
+                <button class="btn btn-outline-danger btn-sm ms-3" (click)="delete(user.id)">Delete</button>
+              </div>
             </td>
           </tr>
         </tbody>
