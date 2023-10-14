@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from './user/dashboard/dashboard.component';
 import { AppRoutingModule } from './app-routing.module';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
-import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './shared/services/user.service';
@@ -17,7 +16,6 @@ import { ToastrModule } from 'ngx-toastr';
     AppComponent,
     DashboardComponent,
     UserEditComponent,
-    UserDetailComponent
   ],
   imports: [
     BrowserModule,
